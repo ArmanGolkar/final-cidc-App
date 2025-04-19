@@ -1,0 +1,19 @@
+{
+    "family": "react-task",
+    "containerDefinitions": [
+      {
+        "name": "final-project",
+        "image": "[547610823172.dkr.ecr.us-east-2.amazonaws.com/final-project]:latest",
+        "memory": 512,
+        "cpu": 256,
+        "essential": true,
+        "portMappings": [
+          {
+            "containerPort": 80,
+            "hostPort": 80
+          }
+        ]
+      }
+    ]
+  }
+  
