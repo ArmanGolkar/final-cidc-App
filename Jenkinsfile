@@ -59,7 +59,7 @@ stage('Push to ECR') {
       set REGION=us-east-2
 
       aws ecs register-task-definition --cli-input-json file://task-definition.json --region %REGION%
-      aws ecs update-service --cluster final-project --service final-project --force-new-deployment --region %REGION%
+      aws ecs update-service --cluster DevCluster --service DevCluster --force-new-deployment --region %REGION%
     '''
   }
 }
