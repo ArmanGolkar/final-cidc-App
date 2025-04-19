@@ -54,13 +54,16 @@ stage('Push to ECR') {
 }
 
       stage('Deploy to AWS ECS') {
-        steps {
-          bat '''
-            aws ecs register-task-definition --cli-input-json file://task-definition.json
-            aws ecs update-service --cluster your-cluster-name --service your-service-name --force-new-deployment
-          '''
-        }
-      }
+  steps {
+    bat '''
+      set REGION=us-east-2
+
+      aws ecs register-task-definition --cli-input-json file://task-definition.json --region %REGION%
+      aws ecs update-service --cluster your-cluster-name --service your-service-name --force-new-deployment --region %REGION%
+    '''
+  }
+}
+
 
 
     }
