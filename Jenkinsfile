@@ -35,24 +35,24 @@ pipeline {
                 bat 'docker run -d -p 3000:80 --name final-project final-project'
             }
         }
-        stage('Push to ECR') {
-          steps {
-           withCredentials([usernamePassword(credentialsId: 'aws-ecr-creds', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                bat '''
-          set REGION=us-east-2
-          set REPO=547610823172.dkr.ecr.%REGION%.amazonaws.com/final-project
+stage('Push to ECR') {
+  steps {
+    withCredentials([usernamePassword(credentialsId: 'aws-ecr-creds', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+      bat '''
+        set REGION=us-east-2
+        set REPO=547610823172.dkr.ecr.%REGION%.amazonaws.com/final-project
 
-          aws --version
-          aws configure set aws_access_key_id %AWS_ACCESS_KEY_ID%
-          aws configure set aws_secret_access_key %AWS_SECRET_ACCESS_KEY%
+        aws configure set aws_access_key_id %AWS_ACCESS_KEY_ID%
+        aws configure set aws_secret_access_key %AWS_SECRET_ACCESS_KEY%
 
-          aws ecr get-login-password --region %REGION% | docker login --username AWS --password-stdin %REPO%
-          docker tag final-project:latest %REPO%:latest
-          docker push %REPO%:latest
-        '''
+        aws ecr get-login-password --region %REGION% | docker login --username AWS --password-stdin %REPO%
+        docker tag final-project:latest %REPO%:latest
+        docker push %REPO%:latest
+      '''
     }
   }
 }
+
       stage('Deploy to AWS ECS') {
         steps {
           bat '''
