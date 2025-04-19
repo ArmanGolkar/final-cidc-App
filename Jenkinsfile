@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone repository') {
+        stage('Clone Repo') {
             steps {
-                git 'https://github.com/ArmanGolkar/final-cidc-App.git'
+                git branch: 'main', url: 'https://github.com/ArmanGolkar/final-cidc-App.git'
             }
         }
 
